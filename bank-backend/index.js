@@ -11,19 +11,7 @@ const PORT = process.env.PORT;
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set up CORS middleware
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://banking-system-gamma.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-
-  // Allow preflight requests to succeed
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
-
+app.use(cors())
 
 app.use(express.json());
 
