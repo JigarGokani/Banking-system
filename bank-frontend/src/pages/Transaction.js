@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import TransactionPopup from '../components/TransactionPopup';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import TransactionPopup from "../components/TransactionPopup";
+import { useNavigate, useParams } from "react-router-dom";
 
 const TransactionsPage = () => {
   const [loggedIn, setLoggedIn] = useState(true);
@@ -11,7 +11,7 @@ const TransactionsPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedBalance = localStorage.getItem('balance');
+    const storedBalance = localStorage.getItem("balance");
     if (storedBalance) {
       setTransactions([{ balance: parseFloat(storedBalance) }]);
     } else {
@@ -24,53 +24,62 @@ const TransactionsPage = () => {
 
   const fetchOrCreateAccount = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/createAccount`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/createAccount`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.ok) {
-        console.log('Account created or already exists for user:', userId);
+        console.log("Account created or already exists for user:", userId);
         fetchBalance();
       } else {
-        console.error('Error creating or fetching account:', response.statusText);
+        console.error(
+          "Error creating or fetching account:",
+          response.statusText
+        );
       }
     } catch (error) {
-      console.error('Error creating or fetching account:', error);
+      console.error("Error creating or fetching account:", error);
     }
   };
 
   const fetchBalance = () => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/balance`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         if (data.success) {
-          localStorage.setItem('balance', data.balance);
+          localStorage.setItem("balance", data.balance);
           setTransactions([{ balance: data.balance }]);
         } else {
-          console.error('Error retrieving balance:', data.message);
+          console.error("Error retrieving balance:", data.message);
         }
       })
-      .catch(error => console.error('Fetch balance error:', error))
+      .catch((error) => console.error("Fetch balance error:", error))
       .finally(() => setLoading(false));
   };
 
   const handleDeposit = async (amount) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/deposit`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ amount }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/deposit`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ amount }),
+        }
+      );
 
       if (response.ok) {
         fetchTransactions();
       } else {
-        console.error('Deposit failed:', response.statusText);
+        console.error("Deposit failed:", response.statusText);
       }
     } catch (error) {
       console.error(error);
@@ -79,18 +88,21 @@ const TransactionsPage = () => {
 
   const handleWithdraw = async (amount) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/withdraw`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ amount }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/withdraw`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ amount }),
+        }
+      );
 
       if (response.ok) {
         fetchTransactions();
       } else {
-        console.error('Withdrawal failed:', response.statusText);
+        console.error("Withdrawal failed:", response.statusText);
       }
     } catch (error) {
       console.error(error);
@@ -98,33 +110,37 @@ const TransactionsPage = () => {
   };
 
   const fetchTransactions = () => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/transactions`)
-      .then(response => response.json())
-      .then(data => {
+    fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/transactions`
+    )
+      .then((response) => response.json())
+      .then((data) => {
         if (data.success) {
           setTransactions(data.transactions);
         } else {
-          console.error('Error retrieving transactions:', data.message);
+          console.error("Error retrieving transactions:", data.message);
         }
       })
-      .catch(error => console.error('Fetch error:', error));
+      .catch((error) => console.error("Fetch error:", error));
   };
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/logout`, {
-        method: 'POST',
-        credentials: 'include',
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/users/logout`,
+        {
+          method: "POST",
+        }
+      );
 
       if (response.ok) {
         setLoggedIn(false);
-        navigate('/login');
+        navigate("/login");
       } else {
-        console.error('Logout failed:', response.statusText);
+        console.error("Logout failed:", response.statusText);
       }
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
     }
   };
 
