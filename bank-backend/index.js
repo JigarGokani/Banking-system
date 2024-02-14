@@ -8,7 +8,13 @@ const dbConnect = require("./config/database")
 require("dotenv").config()
 const PORT = process.env.PORT;
 
-app.use(cors());
+const corsOptions = {
+  origin: 'https://banking-system-gamma.vercel.app',
+  // Other cors options if needed
+};
+
+app.use(cors(corsOptions));
+
 
 app.use(express.json());
 
