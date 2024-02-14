@@ -8,14 +8,21 @@ const dbConnect = require("./config/database")
 require("dotenv").config()
 const PORT = process.env.PORT;
 
-const corsOptions = {
-  origin: 'https://banking-system-gamma.vercel.app',
-  // Other cors options if needed
-};
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.options('*', cors(corsOptions));
+// Set up CORS middleware
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://banking-system-gamma.vercel.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
-app.use(cors(corsOptions));
+  // Allow preflight requests to succeed
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
 
 
 app.use(express.json());
