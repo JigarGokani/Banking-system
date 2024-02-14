@@ -75,8 +75,10 @@ const TransactionsPage = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  };  
 
+
+  
   const handleWithdraw = async (amount) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/withdraw`, {
