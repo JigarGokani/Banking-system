@@ -23,3 +23,6 @@ app.listen(PORT, () => {
 });
 
 
+app.get("/",(req,res)=>{
+  res.send("WELCOME TO DEFAULT ROUTE!")
+})

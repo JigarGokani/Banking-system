@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {useNavigate } from 'react-router-dom';
 
 
+
 const BankerLogin = () => {
   const navigate = useNavigate()
 
@@ -18,7 +19,7 @@ const BankerLogin = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8080/api/banker/login', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/banker/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

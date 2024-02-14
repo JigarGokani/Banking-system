@@ -12,7 +12,7 @@ const TransactionHistory = () => {
         const token = localStorage.getItem('token');
         console.log('Authorization Token:', token);
 
-        const response = await fetch(`http://localhost:8080/api/banker/transactions/${userId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/banker/transactions/${userId}`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
