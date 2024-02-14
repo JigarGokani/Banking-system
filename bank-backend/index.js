@@ -9,7 +9,7 @@ require("dotenv").config()
 const PORT = process.env.PORT;
 
 const corsOptions = {
-  origin: 'https://banking-system-gamma.vercel.app',
+  origin: '*',
   // Other cors options if needed
 };
 
