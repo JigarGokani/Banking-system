@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import {useNavigate } from 'react-router-dom';
 
+const apiUrl = process.env.REACT_APP_BACKEND_URL;
+console.log(apiUrl)
 
 const Login = () => {
   const navigate = useNavigate()
@@ -18,7 +20,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/login`, {
+      const response = await fetch(`${apiUrl}/api/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
