@@ -28,7 +28,7 @@ const BankerLogin = () => {
       });
 
       const data = await response.json();
-      console.log(data)
+      console.log("accounts ka data",data)
 
       if (data.success) {
         localStorage.setItem('token', data.token);

@@ -29,7 +29,7 @@ const Login = () => {
       });
 
       const data = await response.json();
-      console.log(data)
+      console.log("data achuka he",data)
 
       if (data.success) {
         localStorage.setItem('token', data.token);

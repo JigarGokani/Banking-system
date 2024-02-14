@@ -24,7 +24,7 @@ const TransactionsPage = () => {
 
   const fetchOrCreateAccount = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/accounts/${userId}/createAccount`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/createAccount`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ const TransactionsPage = () => {
   };
 
   const fetchBalance = () => {
-    fetch(`http://localhost:8080/api/accounts/${userId}/balance`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/balance`)
       .then(response => response.json())
       .then(data => {
         if (data.success) {
@@ -59,7 +59,7 @@ const TransactionsPage = () => {
 
   const handleDeposit = async (amount) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/accounts/${userId}/deposit`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/deposit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ const TransactionsPage = () => {
 
   const handleWithdraw = async (amount) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/accounts/${userId}/withdraw`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/withdraw`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const TransactionsPage = () => {
   };
 
   const fetchTransactions = () => {
-    fetch(`http://localhost:8080/api/accounts/${userId}/transactions`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/transactions`)
       .then(response => response.json())
       .then(data => {
         if (data.success) {
@@ -112,7 +112,7 @@ const TransactionsPage = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/users/logout', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/logout`, {
         method: 'POST',
         credentials: 'include',
       });

@@ -7,7 +7,7 @@ const AccountsPage = () => {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/banker/accounts', {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/banker/accounts`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
