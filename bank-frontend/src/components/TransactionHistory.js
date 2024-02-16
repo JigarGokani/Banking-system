@@ -38,10 +38,13 @@ const TransactionHistory = () => {
     fetchTransactions();
   }, [userId]);
 
-  console.log("Full transactions array:", transactions);
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString(); // Adjust the format as needed
+  };
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container mx-auto mt-8 max-w-[1150px]">
       <h2 className="text-2xl font-semibold mb-4">Transaction History for User ID: {userId}</h2>
 
       {loading ? (
@@ -49,9 +52,9 @@ const TransactionHistory = () => {
       ) : transactions.length === 0 ? (
         <p>No transactions found.</p>
       ) : (
-        <table className="min-w-full border border-gray-300">
+        <table className="min-w-full bg-white border border-gray-300 shadow-md">
           <thead>
-            <tr className="bg-gray-100">
+            <tr className="bg-slate-200">
               <th className="border p-2">Type</th>
               <th className="border p-2">Amount</th>
               <th className="border p-2">Timestamp</th>
@@ -62,7 +65,7 @@ const TransactionHistory = () => {
               <tr key={transaction._id}>
                 <td className="border p-2">{transaction.type}</td>
                 <td className="border p-2">${transaction.amount}</td>
-                <td className="border p-2">{transaction.timestamp}</td>
+                <td className="border p-2">{formatTimestamp(transaction.timestamp)}</td>
               </tr>
             ))}
           </tbody>

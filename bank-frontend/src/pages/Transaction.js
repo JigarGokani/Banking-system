@@ -75,10 +75,8 @@ const TransactionsPage = () => {
     } catch (error) {
       console.error(error);
     }
-  };  
+  };
 
-
-  
   const handleWithdraw = async (amount) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/withdraw`, {
@@ -104,7 +102,7 @@ const TransactionsPage = () => {
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          setTransactions(data.transactions);
+          setTransactions(data.transactions || []);
         } else {
           console.error('Error retrieving transactions:', data.message);
         }
@@ -116,7 +114,6 @@ const TransactionsPage = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/logout`, {
         method: 'POST',
-        credentials: 'include',
       });
 
       if (response.ok) {
@@ -135,8 +132,13 @@ const TransactionsPage = () => {
     setShowPopup(false);
   };
 
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString(); // Adjust the format as needed
+  };
+
   return (
-    <div>
+    <div className="container mt-8 mx-auto max-w-[1150px]">
       <h2 className="text-2xl font-semibold mb-4">Transactions Page</h2>
 
       {transactions?.length > 0 && transactions[0]?.balance !== undefined && (
@@ -146,50 +148,54 @@ const TransactionsPage = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <table className="table-auto mt-4">
-          <thead>
-            <tr>
-              <th className="border px-4 py-2">User ID</th>
-              <th className="border px-4 py-2">Balance</th>
-              <th className="border px-4 py-2">Transaction Type</th>
-              <th className="border px-4 py-2">Amount</th>
-              <th className="border px-4 py-2">Timestamp</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions?.map((transaction, index) => (
-              <tr key={index}>
-                <td className="border px-4 py-2">{userId}</td>
-                <td className="border px-4 py-2">{transaction.balance}</td>
-                <td className="border px-4 py-2">{transaction.type}</td>
-                <td className="border px-4 py-2">{transaction.amount}</td>
-                <td className="border px-4 py-2">{transaction.timestamp}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+        <div className="mt-4">
+          <div className="overflow-x-auto shadow-lg rounded-lg">
+            <table className="table-auto w-full bg-white">
+              <thead>
+                <tr className="bg-slate-200">
+                  <th className="border px-4 py-2">User ID</th>
+                  <th className="border px-4 py-2">Balance</th>
+                  <th className="border px-4 py-2">Transaction Type</th>
+                  <th className="border px-4 py-2">Amount</th>
+                  <th className="border px-4 py-2">Timestamp</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions?.map((transaction, index) => (
+                  <tr key={index}>
+                    <td className="border px-4 py-2">{userId}</td>
+                    <td className="border px-4 py-2">{transaction.balance}</td>
+                    <td className="border px-4 py-2">{transaction.type}</td>
+                    <td className="border px-4 py-2">{transaction.amount}</td>
+                    <td className="border px-4 py-2">{formatTimestamp(transaction.timestamp)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-      <div className="mt-4 flex justify-between">
-        <button
-          onClick={() => setShowPopup(true)}
-          className="bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition-all"
-        >
-          Deposit
-        </button>
-        <button
-          onClick={() => setShowPopup(true)}
-          className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition-all"
-        >
-          Withdraw
-        </button>
-        <button
-          onClick={handleLogout}
-          className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-all"
-        >
-          Logout
-        </button>
-      </div>
+          <div className="mt-4 flex justify-between">
+            <button
+              onClick={() => setShowPopup(true)}
+              className="bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition-all"
+            >
+              Deposit
+            </button>
+            <button
+              onClick={() => setShowPopup(true)}
+              className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition-all"
+            >
+              Withdraw
+            </button>
+            <button
+              onClick={handleLogout}
+              className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-all"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      )}
 
       {showPopup && (
         <TransactionPopup

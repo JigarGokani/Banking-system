@@ -18,7 +18,6 @@ const AccountsPage = () => {
 
         if (data.success) {
           setAccounts(data.accounts);
-          console.log(data.accounts);
         } else {
           console.error(data.message);
         }
@@ -31,24 +30,24 @@ const AccountsPage = () => {
   }, []);
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container mx-auto mt-8 max-w-[1150px]">
       <h2 className="text-2xl font-semibold mb-4">All Customer Accounts</h2>
-      <table className="min-w-full border border-gray-200">
+      <table className="min-w-full bg-white border border-gray-300 shadow-lg rounded">
         <thead>
-          <tr>
-            <th className="border border-gray-200 p-2">User ID</th>
-            <th className="border border-gray-200 p-2">Email</th>
-            <th className="border border-gray-200 p-2">Balance</th>
-            <th className="border border-gray-200 p-2">Actions</th>
+          <tr className="bg-slate-200">
+            <th className="border border-gray-300 p-3">User ID</th>
+            <th className="border border-gray-300 p-3">Email</th>
+            <th className="border border-gray-300 p-3">Balance</th>
+            <th className="border border-gray-300 p-3">Actions</th>
           </tr>
         </thead>
         <tbody>
           {accounts.map((account) => (
             <tr key={account._id}>
-              <td className="border border-gray-200 p-2">{account.userId._id}</td>
-              <td className="border border-gray-200 p-2">{account.userId.email}</td>
-              <td className="border border-gray-200 p-2">${account.balance}</td>
-              <td className="border border-gray-200 p-2">
+              <td className="border border-gray-300 p-3">{account.userId._id}</td>
+              <td className="border border-gray-300 p-3">{account.userId.email}</td>
+              <td className="border border-gray-300 p-3">${account.balance}</td>
+              <td className="border border-gray-300 p-3">
                 <Link to={`/banker/transactions/${account.userId._id}`} className="text-blue-500 hover:underline">
                   View Transactions
                 </Link>
