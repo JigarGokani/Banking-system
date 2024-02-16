@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const AccountsPage = () => {
   const [accounts, setAccounts] = useState([]);
@@ -7,12 +7,15 @@ const AccountsPage = () => {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/banker/accounts`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/api/banker/accounts`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
 
         const data = await response.json();
 
@@ -22,7 +25,7 @@ const AccountsPage = () => {
           console.error(data.message);
         }
       } catch (error) {
-        console.error('Error fetching accounts:', error);
+        console.error("Error fetching accounts:", error);
       }
     };
 
@@ -44,10 +47,10 @@ const AccountsPage = () => {
         <tbody>
           {accounts.map((account) => (
             <tr key={account._id}>
-              <td className="border border-gray-300 p-3">{account.userId._id}</td>
-              <td className="border border-gray-300 p-3">{account.userId.email}</td>
-              <td className="border border-gray-300 p-3">${account.balance}</td>
-              <td className="border border-gray-300 p-3">
+              <td className="border border-gray-200 p-2">{account.userId._id}</td>
+              <td className="border border-gray-200 p-2">{account.userId.email}</td>
+              <td className="border border-gray-200 p-2">${account.balance}</td>
+              <td className="border border-gray-200 p-2">
                 <Link to={`/banker/transactions/${account.userId._id}`} className="text-blue-500 hover:underline">
                   View Transactions
                 </Link>

@@ -1,14 +1,12 @@
-import { useState } from 'react';
-import {useNavigate } from 'react-router-dom';
-
-
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BankerLogin = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -19,38 +17,50 @@ const BankerLogin = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/banker/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/banker/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await response.json();
-      console.log("accounts ka data",data)
 
       if (data.success) {
-        localStorage.setItem('token', data.token);
+        localStorage.setItem("token", data.token);
 
         navigate("/banker/accounts");
       } else {
         console.error(data.message);
       }
     } catch (error) {
-      console.error('Error during login:', error);
+      console.error("Error during login:", error);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center mx-auto" style={{
-        backgroundImage: 'url("https://i0.wp.com/www.itsdevelopers.in/wp-content/uploads/2017/11/web-designer-kottayam-background.jpg?ssl=1")',
-        backgroundSize: 'cover', 
-      }}>
-      <form className="max-w-md p-8 bg-white shadow-md rounded-md" onSubmit={handleLogin}>
-        <h2 className="text-2xl font-semibold mb-6">Customer Login</h2>
+    <div
+      className="min-h-screen flex items-center justify-center mx-auto"
+      style={{
+        backgroundImage:
+          'url("https://i0.wp.com/www.itsdevelopers.in/wp-content/uploads/2017/11/web-designer-kottayam-background.jpg?ssl=1")',
+        backgroundSize: "cover",
+      }}
+    >
+      <form
+        className="max-w-md p-8 bg-white shadow-md rounded-md"
+        onSubmit={handleLogin}
+      >
+        <h2 className="text-2xl font-semibold mb-6">Banker Login</h2>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="email"
+          >
             Email:
           </label>
           <input
@@ -64,7 +74,10 @@ const BankerLogin = () => {
           />
         </div>
         <div className="mb-6">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="password"
+          >
             Password:
           </label>
           <input
