@@ -140,7 +140,9 @@ const TransactionsPage = () => {
     } catch (error) {
       console.error("Logout error:", error);
     }
-  };
+  };   
+
+  
 
   const handlePopupClose = () => {
     fetchTransactions();

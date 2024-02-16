@@ -9,7 +9,7 @@ exports.getAllAccounts = async (req, res) => {
       select: "email name", // Specify the fields you want to retrieve from the User schema
     });
 
-    console.log("binit dataav", accounts);
+    console.log(accounts);
     res.json({
       success: true,
       accounts,

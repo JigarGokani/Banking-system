@@ -19,6 +19,8 @@ const AccountsPage = () => {
 
         const data = await response.json();
 
+        
+
         if (data.success) {
           setAccounts(data.accounts);
         } else {
@@ -39,6 +41,9 @@ const AccountsPage = () => {
         <thead>
           <tr className="bg-slate-200">
             <th className="border border-gray-300 p-3">User ID</th>
+            <th className="border border-gray-300 p-3">UserName</th>
+
+
             <th className="border border-gray-300 p-3">Email</th>
             <th className="border border-gray-300 p-3">Balance</th>
             <th className="border border-gray-300 p-3">Actions</th>
@@ -48,6 +53,8 @@ const AccountsPage = () => {
           {accounts.map((account) => (
             <tr key={account._id}>
               <td className="border border-gray-200 p-2">{account.userId._id}</td>
+              <td className="border border-gray-200 p-2">{account.userId.name}</td>
+
               <td className="border border-gray-200 p-2">{account.userId.email}</td>
               <td className="border border-gray-200 p-2">${account.balance}</td>
               <td className="border border-gray-200 p-2">
