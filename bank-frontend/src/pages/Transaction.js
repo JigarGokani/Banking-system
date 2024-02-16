@@ -128,7 +128,6 @@ const TransactionsPage = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/logout`, {
         method: 'POST',
-        credentials: 'include',
       });
 
       if (response.ok) {
@@ -142,7 +141,7 @@ const TransactionsPage = () => {
     }
   };   
 
-  
+
 
   const handlePopupClose = () => {
     fetchTransactions();
