@@ -47,20 +47,28 @@ const TransactionsPage = () => {
       console.error("Error creating or fetching account:", error);
     }
   };
+  const fetchBalance = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/balance`);
+      const data = await response.json();
+      console.log("balance agya kya",data)
 
-  const fetchBalance = () => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/accounts/${userId}/balance`)
-      .then((response) => response.json())
-      .then((data) => {
+
+      if (response.ok) {
         if (data.success) {
           localStorage.setItem("balance", data.balance);
           setTransactions([{ balance: data.balance }]);
         } else {
           console.error("Error retrieving balance:", data.message);
         }
-      })
-      .catch((error) => console.error("Fetch balance error:", error))
-      .finally(() => setLoading(false));
+      } else {
+        console.error("Fetch balance failed:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Fetch balance error:", error);
+    } finally {
+      setLoading(false);
+    };
   };
 
   const handleDeposit = async (amount) => {

@@ -41,7 +41,7 @@ exports.getUserTransactions = async (req, res) => {
     }
 
     const formattedTransactions = account.transactions.map(transaction => ({
-      userId,
+      userId:account.userId,
       balance: account.balance,
       type: transaction.type,
       amount: transaction.amount,
@@ -52,6 +52,29 @@ exports.getUserTransactions = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+};
+
+exports.fetchBalance = async (req, res) => {
+
+  try {
+
+    const {userId} = req.params;
+
+    console.log(userId)
+
+    const account = await Account.findOne({ userId });
+
+    console.log("account mila he",account)
+
+    if (!account) {
+      return res.status(404).json({ success: false, message: 'Account not found' });
+    }
+
+    res.status(200).json({ success: true, balance: account.balance });
+  } catch (error) {
+    console.error('Error retrieving balance:', error);
+    res.status(500).json({ success: false, message: 'Error retrieving balance' });
   }
 };
 
