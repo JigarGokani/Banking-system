@@ -45,6 +45,7 @@ const TransactionsPage = () => {
         );
       }
       await fetchBalance();
+      await fetchTransactions();
 
     } catch (error) {
       console.error("Error creating or fetching account:", error);
@@ -180,8 +181,12 @@ const TransactionsPage = () => {
             <table className="table-auto w-full bg-white">
               <thead>
                 <tr className="bg-slate-200">
+                <th className="border px-4 py-2">Sr No.</th>
+
                   <th className="border px-4 py-2">User ID</th>
+
                   <th className="border px-4 py-2">Balance</th>
+
                   <th className="border px-4 py-2">Transaction Type</th>
                   <th className="border px-4 py-2">Amount</th>
                   <th className="border px-4 py-2">Timestamp</th>
@@ -190,7 +195,11 @@ const TransactionsPage = () => {
               <tbody>
                 {transactions?.map((transaction, index) => (
                   <tr key={index}>
+                    <td className="border px-4 py-2">{index+1}</td>
+
                     <td className="border px-4 py-2">{userId}</td>
+
+                    
                     <td className="border px-4 py-2">{transaction.balance}</td>
                     <td className="border px-4 py-2">{transaction.type}</td>
                     <td className="border px-4 py-2">{transaction.amount}</td>
