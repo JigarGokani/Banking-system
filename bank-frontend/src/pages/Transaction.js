@@ -36,13 +36,16 @@ const TransactionsPage = () => {
 
       if (response.ok) {
         console.log("Account created or already exists for user:", userId);
-        fetchBalance();
+        await fetchBalance();
       } else {
         console.error(
           "Error creating or fetching account:",
           response.statusText
+
         );
       }
+      await fetchBalance();
+
     } catch (error) {
       console.error("Error creating or fetching account:", error);
     }
